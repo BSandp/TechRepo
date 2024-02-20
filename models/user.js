@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
         validate: {
             validator: function(v) {
               // Expresión regular para validar el formato del correo electrónico
-              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); //EXPRESIÓN REGULAR
             },
             message: props => `${props.value} no es un correo electrónico válido!`
           }

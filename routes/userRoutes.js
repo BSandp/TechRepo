@@ -2,8 +2,14 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const UserSchema = require('../models/user.js')
+const UserController = require('../controllers/userController')
+const userController = new UserController();
 
-router.get('/user', async (req, res) => {
+
+
+
+
+router.get('/user', userController.validateToken, async (req, res) => {
     //Traer todos los usuarios
     let users = await UserSchema.find(); 
     res.json(users)
@@ -96,6 +102,15 @@ router.delete('/user/:id', (req, res) => {
     //         console.log(error)
     //         res.json({"status": "failed", "message": "Error deleting user"})
     //     })
+})
+
+router.post('/login', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    userController.login(email, password).then((result) => {
+        res.send(result)
+    })
 })
 
 module.exports = router
