@@ -1,10 +1,12 @@
 const bcrypt = require('bcrypt');
 const UserSchema = require('../models/user')
 const jwt = require('jsonwebtoken')
-
+const JWT_SECRET= process.env.JWT_SECRET || '';
 class UserController {
 
-    constructor(){}
+    constructor(){
+        
+    }
 
     async login(email, password){
         try {
@@ -21,7 +23,7 @@ class UserController {
             return { "status": "error", "message": "Contraseña incorrecta"}
         }
 
-      const token = jwt.sign({ userId: user._id, email: user.email }, 'secreto', { expiresIn: '1h' })
+      const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' })
 
         return {"status": "success", "token": token }//"token": token
 
@@ -36,7 +38,7 @@ class UserController {
             return res.status(401).json({"message":"token no existe"})
         }
         const token = bearertoken.startsWith("Bearer ") ? bearertoken.slice(7): bearertoken;
-        jwt.verify(token,'secreto', (err,decoded)=>{
+        jwt.verify(token,JWT_SECRET, (err,decoded)=>{
             if(err){
                 return res.status(401).json({"message":"token invalido"});
             }
@@ -45,4 +47,5 @@ class UserController {
         })
     }
 }
+
 module.exports = UserController

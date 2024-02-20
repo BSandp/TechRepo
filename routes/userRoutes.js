@@ -4,12 +4,12 @@ const bcrypt = require('bcrypt');
 const UserSchema = require('../models/user.js')
 const UserController = require('../controllers/userController')
 const userController = new UserController();
+const multer = require('multer');
 
 
 
 
-
-router.get('/user', userController.validateToken, async (req, res) => {
+router.get('/user', async (req, res) => {
     //Traer todos los usuarios
     let users = await UserSchema.find(); 
     res.json(users)
@@ -74,7 +74,7 @@ router.patch('/user/:id', (req, res) => {
     })
 })
 
-router.delete('/user/:id', (req, res) => {
+router.delete('/user/:id', userController.validateToken, (req, res) => {
     
     var id = req.params.id
 
@@ -103,7 +103,7 @@ router.delete('/user/:id', (req, res) => {
     //         res.json({"status": "failed", "message": "Error deleting user"})
     //     })
 })
-
+// SERVICIO WEB DE LOGIN Y AUTENTIFICACION
 router.post('/login', (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -112,5 +112,43 @@ router.post('/login', (req, res) => {
         res.send(result)
     })
 })
+
+//CONFIGURACION LIBRERIA MULTER
+const storage= multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'uploads/')
+    },
+    filename: function(req, file, cb){
+        cb(null,Date.now()+ '-'+ file.originalname)
+    }
+});
+const fileFilter= (req,file,cb)=>{
+    
+    if(file.mimetype.startsWith('image/')){
+        cb(null,true)
+    }else{
+        cb(new Error("El archivo no es una imagen"))
+    }
+}
+const upload= multer({storage: storage, fileFilter: fileFilter})
+
+//SERVICIO WEB PARA SUBIR ARCHIVOS - --  
+
+router.post('/upload/:id/user', upload.single('file'),(req, res)=>{
+    if(!req.file){
+        return req.status(400).send({"status": "error", "message": "no se proporciono ningun archivo"})
+    }
+    var id = req.params.id
+    var updateUser= {
+        avatar: req.file.path
+    }
+    UserSchema.findByIdAndUpdate(id, updateUser, {new: true}).then((result) => {
+        res.send({"status": "success","message": "archivo subido correctamente"})
+    }).catch((error) => {
+        console.log(error)
+        res.send("Error al subir el archivo")
+    })
+} )
+
 
 module.exports = router
