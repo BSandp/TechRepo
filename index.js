@@ -3,9 +3,10 @@ const express = require('express') //Importo la libreria
 const app = express() //Inicializacion de la variable que usara la libreria
 const router = express.Router(); // Enrutar los servicios web
 const port = 3000; // Escuchar la ejecucion del servidor
-
+require('dotenv').config()
+const DB_URL= process.env.DB_URL || '';
 const mongoose = require('mongoose'); // Importo la libreria mongoose
-mongoose.connect() // Creo la cadena de conexion
+mongoose.connect(DB_URL) // Creo la cadena de conexion
 
 const userRoutes = require('./routes/userRoutes.js');
 
