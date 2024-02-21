@@ -7,6 +7,7 @@ require('dotenv').config()
 const DB_URL= process.env.DB_URL || '';
 const mongoose = require('mongoose'); // Importo la libreria mongoose
 mongoose.connect(DB_URL) // Creo la cadena de conexion
+const houseRoutes = require('./routes/houseRoutes.js');
 
 const userRoutes = require('./routes/userRoutes.js');
 
@@ -21,9 +22,10 @@ router.get('/', (req, res) => {
 })
 
 //Ejecuto el servidor
-app.use(router)
+app.use(router);
 app.use('/uploads', express.static('uploads'));
-app.use('/', userRoutes)
+app.use('/', userRoutes);
+app.use('/', houseRoutes);
 app.listen(port, () => {
     console.log('Listen on ' + port)
 })

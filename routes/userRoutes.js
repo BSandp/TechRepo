@@ -19,7 +19,7 @@ router.get('/user/:id', async (req, res) => {
     //Traer un usuario especifico pasando el ID
     var id = req.params.id
     let user = await UserSchema.findById(id); 
-    // console.log(user)
+    //console.log(id, user)
     res.json(user)
 
     //Traer un usuario pasandole el email
