@@ -12,7 +12,7 @@ const resolvers = require('./resolvers')
 const user = new GraphQLObjectType({
     name: 'User',
     fields: {
-        _id: { type: GraphQLID },
+        _id: { type: GraphQLString },
         name: { type: GraphQLString },
         lastname: { type: GraphQLString },
         email: { type: GraphQLString },
@@ -22,7 +22,7 @@ const user = new GraphQLObjectType({
 const message = new GraphQLObjectType({
     name: "message",
     fields: {
-        _id: { type: GraphQLID },
+        _id: { type: GraphQLString },
         body: { type: GraphQLString },
         from: { type: user },
         to: { type: user },
@@ -71,11 +71,11 @@ const UserFilterInput = new GraphQLInputObjectType({
       }
     },
     Users: {
-      type: GraphQLList(user),
+      type:new GraphQLList(user),
       resolve: resolvers.Users
     },
     UsersByFilter: {
-      type: GraphQLList(user),
+      type:new GraphQLList(user),
       resolve: resolvers.UsersByFilter,
       args: {
         filter: { type: UserFilterInput }

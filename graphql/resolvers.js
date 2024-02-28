@@ -1,20 +1,20 @@
-const userSchema = require('../models/User')
+const userSchema = require('../models/user')
 
 
 const resolvers = {    
-    hello: () => {
+    hello:async () => {
         return "Hola Mundo!";
     },
     User: async (_, {id}) => {
         try {
-            return user = await UserSchema.findById(id);
+            return user = await userSchema.findById(id);
         }catch(e){
             console.log()
         }
     },
     Users: async () => {
         try{
-            return await UserSchema.find();
+            return await userSchema.find();
         }
         catch(e){
             console.log(e)
@@ -26,19 +26,19 @@ const resolvers = {
 
             if(filter){
                 if(filter.name){
-                    // {name: "Mar"}
+                   
                     query.name = { $regex: filter.name, $options: 'i' } // 'i' se utiliza para hacer una busqueda insesible de mayusculas y minusculas
                 }
                 if(filter.email){
-                    // {email: "juan@"}
+                    
                     query.email = { $regex: filter.email, $options: 'i'}
                 }
                 if(filter.lastname){
-                    // {lastname: "San"}
+                    
                     query.lastname = { $regex: filter.lastname, $options: 'i' }
                 }
 
-                const users = await UserSchema.find(query)
+                const users = await userSchema.find(query)
                 return users;
             }
 

@@ -14,7 +14,7 @@ const io=socket(http)//al servidor http ;
 
 //crear servidor GRAPHQL 
 const { createYoga } = require('graphql-yoga');
-const schema = require('./Graphql/resolvers');
+const schema = require('./Graphql/schema');
 
 // router.get('/', (req, res) => {
 //     //Informacion a modificar
