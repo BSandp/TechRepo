@@ -12,6 +12,10 @@ const io=socket(http)//al servidor http ;
 
 
 
+//crear servidor GRAPHQL 
+const { createYoga } = require('graphql-yoga');
+const schema = require('./Graphql/resolvers');
+
 // router.get('/', (req, res) => {
 //     //Informacion a modificar
 //     res.send("Hello world")
@@ -58,6 +62,12 @@ app.use((res,req,next) => {
 });
 //Metodo [GET, POST, PUT, PATCH, DELETE]
 // Nombre del servicio [/]
+
+
+
+const yoga= new createYoga({schema});
+app.use('/graphql', yoga)
+
 
 //Ejecuto el servidor
 app.use(router);
