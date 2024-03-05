@@ -28,6 +28,10 @@ const messageSchemas = require('./models/message');
 
 
 
+router.get('/', async (req, res) => {
+    //Traer todos los usuarios
+    res.send("Hello world")
+})
 
 
 io.on('connect', (socket) => {
@@ -79,3 +83,4 @@ app.use('/', messageRoutes);
 http.listen(port, () => {
     console.log('Listen on ' + port)
 })
+module.exports= http

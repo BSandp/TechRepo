@@ -101,7 +101,7 @@ const queries = {
     type: message,
     resolve: resolvers.Message,
     args: {
-      id: { type: GraphQLString }
+      id: { type: GraphQLString } // argumentos de
     }
   },
   Messages: {
