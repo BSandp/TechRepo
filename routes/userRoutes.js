@@ -86,22 +86,7 @@ router.delete('/user/:id', userController.validateToken, (req, res) => {
         res.json({"status": "failed", "message": "Error deleting user"})
     })
 
-    //Ejemplo 2
-    // var name = req.params.name
-    // var email = req.params.email
-    // var query;
-    // if(email != null){
-    //     query = {name: name, email: email}
-    // }else{
-    //     query = {name: name}
-    // }
-    // //Puedo establecer cualquier parametro para eliminar
-    //     UserSchema.deleteOne(query).then(() => {
-    //         res.json({"status": "success", "message": "User deleted successfully"})
-    //     }).catch((error) => {
-    //         console.log(error)
-    //         res.json({"status": "failed", "message": "Error deleting user"})
-    //     })
+
 })
 // SERVICIO WEB DE LOGIN Y AUTENTIFICACION
 router.post('/login', (req, res) => {

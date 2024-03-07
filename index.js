@@ -1,6 +1,7 @@
 
 const express = require('express') //Importo la libreria
 const app = express() //Inicializacion de la variable que usara la libreria
+app.disable('x-powered-by')
 const router = express.Router(); // Enrutar los servicios web
 const port = 3000; // Escuchar la ejecucion del servidor
 require('dotenv').config();
@@ -25,7 +26,7 @@ const houseRoutes = require('./routes/houseRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js');
 const messageSchemas = require('./models/message');
-
+const department = require('./read_file');
 
 
 router.get('/', async (req, res) => {
@@ -79,6 +80,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/', userRoutes);
 app.use('/', houseRoutes);
 app.use('/', messageRoutes);
+app.use('/', department);
 
 http.listen(port, () => {
     console.log('Listen on ' + port)
