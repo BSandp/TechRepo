@@ -77,8 +77,8 @@ app.use('/graphql', yoga)
 //Ejecuto el servidor
 app.use(router);
 app.use('/uploads', express.static('uploads'));
-app.use('/', userRoutes);
 app.use('/', houseRoutes);
+app.use('/', userRoutes);
 app.use('/', messageRoutes);
 app.use('/', department);
 

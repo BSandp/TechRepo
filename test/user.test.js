@@ -88,7 +88,7 @@ let token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWQ0ZDBkOWM1YzY1
 //     })
 // })
 
-describe('POST /delete', () => {
+describe('POST /house', () => {
     it('Success delete with _id', async () => {        
         const response = await request(app).delete('/user/'+ userId)
                                         .set('Authorization', 'Bearer ' + token)
