@@ -10,7 +10,9 @@ const mongoose = require('mongoose'); // Importo la libreria mongoose
 const socket= require('socket.io');//importr libreria socket.io
 const http = require('http').Server(app); //configuracion de servidor http almacenado en APP
 const io=socket(http)//al servidor http ;
+const cors = require('cors')
 
+app.use(cors());
 
 
 //crear servidor GRAPHQL 

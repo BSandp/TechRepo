@@ -53,7 +53,7 @@ router.post('/user', async (req, res) => {
     })
 })
 
-router.patch('/user/:id', (req, res) => {
+router.patch('/user/:id',userController.validateToken, (req, res) => {
     //Actualizar un usuario
     // Cuando viene por la url del servicio web params
     var id = req.params.id
