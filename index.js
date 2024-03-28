@@ -12,7 +12,7 @@ const http = require('http').Server(app); //configuracion de servidor http almac
 const io=socket(http)//al servidor http ;
 const cors = require('cors')
 
-app.use(cors());
+app.use(cors('*'));
 
 
 //crear servidor GRAPHQL 

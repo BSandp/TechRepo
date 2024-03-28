@@ -10,7 +10,6 @@ const multer = require('multer');
 
 
 router.get('/user', async (req, res) => {
-    //Traer todos los usuarios
     let users = await UserSchema.find(); 
     res.json(users)
 })
@@ -53,9 +52,14 @@ router.post('/user', async (req, res) => {
     })
 })
 
-router.patch('/user/:id',userController.validateToken, (req, res) => {
+router.patch('/user/:id',userController.validateToken, async (req, res) => {
     //Actualizar un usuario
     // Cuando viene por la url del servicio web params
+    let hashedPassword;
+
+    if(req.body.password){
+        hashedPassword = await bcrypt.hash(req.body.password, 10)
+    }
     var id = req.params.id
     
     // Cuando viene por el body se usa body
@@ -63,7 +67,8 @@ router.patch('/user/:id',userController.validateToken, (req, res) => {
         name: req.body.name,
         lastname: req.body.lastname,
         email: req.body.email,
-        id: req.body.id
+        password: hashedPassword,
+        id: req.body.id,
     }
 
     UserSchema.findByIdAndUpdate(id, updateUser, {new: true}).then((result) => {
@@ -94,7 +99,11 @@ router.post('/login', (req, res) => {
     const password = req.body.password;
 
     userController.login(email, password).then((result) => {
-        res.send(result)
+        if(result.status == "error"){
+            res.status(401).send(result)
+        }else{
+            res.send(result)
+        }
     })
 })
 
